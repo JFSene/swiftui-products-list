@@ -43,7 +43,7 @@ final class NetworkService {
         }
     }
 }
-
+```
 ## SwiftData for Data Persistence
 
 SwiftData is used for local data persistence, allowing the app to store product data locally on the device. This enables offline access to product information and improves app performance by reducing reliance on network requests.
@@ -69,7 +69,7 @@ class ProductsListViewModel: ObservableObject {
         }
     }
 }
-
+```
 ## Requirements
 
 - Xcode 13+
@@ -82,7 +82,7 @@ Clone the repository and open the Xcode project file. Build and run the project 
 
 ```bash
 git clone https://github.com/your-username/your-project.git
-
+``
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
