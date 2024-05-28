@@ -8,7 +8,7 @@ The project consists of the following components:
 
 1. **Networking Service**: The `NetworkService` class is responsible for making asynchronous network requests to fetch product data from a remote API. It uses the async/await syntax introduced in Swift 5.5 for asynchronous programming.
 
-2. **Model**: The project includes models (`Product) representing the structure of product data fetched from the API. These models conform to the `Codable` protocol for easy serialization and deserialization of JSON data.
+2. **Model**: The project includes models (`Product`) representing the structure of product data fetched from the API. These models conform to the `Codable` protocol for easy serialization and deserialization of JSON data.
 
 3. **ViewModel**: The `ProductsListViewModel` class serves as the view model for the product listing view. It interacts with the networking service to fetch product data and provides the necessary data for the view to render.
 
@@ -74,7 +74,8 @@ class ProductsListViewModel: ObservableObject {
 
 - Xcode 13+
 - Swift 5.5+
-- iOS 15+
+- SwiftUI
+- iOS 17+
 
 ## Installation
 
