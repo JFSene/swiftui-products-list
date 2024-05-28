@@ -7,9 +7,8 @@ final class ProductsListViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var showAlert: Bool = false
     @Published var isLoading: Bool = false
-    @Published var products: [Product] = []
     
-    var modelContext: ModelContext?
+    var modelContext: ModelContext? // Context for data persistence
     
     init(modelContext: ModelContext?) {
         self.modelContext = modelContext
@@ -21,8 +20,7 @@ final class ProductsListViewModel: ObservableObject {
         
         do {
             let productsList = try await NetworkService.shared.getProductsList()
-            self.products = productsList
-            productsList.forEach { self.modelContext?.insert($0) }
+            productsList.forEach { self.modelContext?.insert($0) } // Insert fetched products into local database
             isLoading = false
         } catch let error as CustomError {
             errorMessage = error.localizedDescription

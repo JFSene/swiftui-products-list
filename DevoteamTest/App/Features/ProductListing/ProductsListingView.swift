@@ -2,7 +2,9 @@ import SwiftUI
 import SwiftData
 
 struct ProductsListingView: View {
+    // ViewModel for managing product data and state
     @EnvironmentObject var viewModel: ProductsListViewModel
+    // Query to fetch products sorted by rating in reverse order
     @Query(sort: [SortDescriptor(\Product.rating, order: .reverse)]) var productsListModel: [Product]
     
     var body: some View {
@@ -24,11 +26,13 @@ struct ProductsListingView: View {
                     }
                 }
             }
+            // Task to fetch products if the list is empty
             .task {
                 if productsListModel.isEmpty {
                     await viewModel.fetchProductsList()
                 }
             }
+            // Display alert if an error occurs during data fetching
             .alert(isPresented: $viewModel.showAlert) {
                 return Alert(
                     title: Text("Oops, somthing went wrong"),

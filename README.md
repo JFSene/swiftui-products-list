@@ -20,7 +20,7 @@ The `NetworkService` class utilizes async/await to perform network requests asyn
 
 ```swift
 final class NetworkService {
-    static let shared = NetworkService()
+       static let shared = NetworkService()
     private let urlSrting = "https://dummyjson.com/products"
     
     func getProductsList() async throws -> [Product] {
@@ -35,10 +35,17 @@ final class NetworkService {
             throw CustomError.invalidResponse
         }
         
+        // Print raw JSON response for debugging
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print("Raw JSON response: \(jsonString)")
+        }
+        
         do {
             let decoder = JSONDecoder()
-            return try decoder.decode([Product].self, from: data)
+            let productsResponse = try decoder.decode(ProductsResponse.self, from: data)
+            return productsResponse.products
         } catch {
+            print("Decoding error: \(error)")
             throw CustomError.invalidData
         }
     }
@@ -79,10 +86,10 @@ class ProductsListViewModel: ObservableObject {
 
 ## Installation
 
-Clone the repository and open the Xcode project file. Build and run the project on a simulator or device running iOS 15 or later.
+Clone the repository and open the Xcode project file. Build and run the project on a simulator or device running iOS 17.
 
 ```bash
-git clone https://github.com/your-username/your-project.git
+git clone https://github.com/JFSene/swiftui-products-list.git
 ``` 
 ## License
 
