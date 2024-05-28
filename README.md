@@ -56,17 +56,29 @@ final class NetworkService {
 SwiftData is used for local data persistence, allowing the app to store product data locally on the device. This enables offline access to product information and improves app performance by reducing reliance on network requests.
 
 ```swift
-import SwiftData
-
-class ProductsListViewModel: ObservableObject {
-    // Other code...
+@MainActor
+final class ProductsListViewModel: ObservableObject {
+    @Published var errorMessage: String?
+    @Published var showAlert: Bool = false
+    @Published var isLoading: Bool = false
+    
+    var modelContext: ModelContext? // Context for data persistence
+    
+    init(modelContext: ModelContext?) {
+        self.modelContext = modelContext
+    }
     
     func fetchProductsList() async {
         isLoading = true
+        errorMessage = nil
         
         do {
             let productsList = try await NetworkService.shared.getProductsList()
             productsList.forEach { self.modelContext?.insert($0) } // Insert fetched products into local database
+            isLoading = false
+        } catch let error as CustomError {
+            errorMessage = error.localizedDescription
+            showAlert = true
             isLoading = false
         } catch {
             errorMessage = "An unexpected error occurred"
