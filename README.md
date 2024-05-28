@@ -66,7 +66,6 @@ class ProductsListViewModel: ObservableObject {
         
         do {
             let productsList = try await NetworkService.shared.getProductsList()
-            self.products = productsList
             productsList.forEach { self.modelContext?.insert($0) } // Insert fetched products into local database
             isLoading = false
         } catch {
